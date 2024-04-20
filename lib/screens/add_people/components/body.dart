@@ -1,10 +1,9 @@
 import 'package:chat/components/filled_outline_button.dart';
 import 'package:chat/constants.dart';
-import 'package:chat/models/Chat.dart';
-import 'package:chat/screens/messages/message_screen.dart';
 import 'package:flutter/material.dart';
-
+import'package:chat/models/User.dart';
 import 'chat_card.dart';
+import 'user_details_screen.dart'; // Import the UserDetailsScreen
 
 class Body extends StatelessWidget {
   const Body({Key? key}) : super(key: key);
@@ -19,22 +18,25 @@ class Body extends StatelessWidget {
           color: kPrimaryColor,
           child: Row(
             children: [
-              FillOutlineButton(press: () {}, text: "Recent Message"),
+              FillOutlineButton(press: () {}, text: "Add people"),
               const SizedBox(width: kDefaultPadding)
             ],
           ),
         ),
         Expanded(
           child: ListView.builder(
-            itemCount: chatsData.length,
+            itemCount: users.length,
             itemBuilder: (context, index) => ChatCard(
-              chat: chatsData[index],
-              press: () => Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => const MessagesScreen(),
-                ),
-              ),
+              user: users[index], // Pass the user object to ChatCard
+              press: () {
+                // Navigate to user details screen when a user card is tapped
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => UserDetailsScreen(user: users[index]),
+                  ),
+                );
+              },
             ),
           ),
         ),

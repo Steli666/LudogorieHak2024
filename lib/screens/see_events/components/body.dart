@@ -1,9 +1,8 @@
 import 'package:chat/components/filled_outline_button.dart';
 import 'package:chat/constants.dart';
-import 'package:chat/models/Chat.dart';
-import 'package:chat/screens/messages/message_screen.dart';
+import 'package:chat/models/Event.dart'; // Import the Event model
+import 'package:chat/screens/see_events/components/EventDetailsScreen.dart';
 import 'package:flutter/material.dart';
-
 import 'chat_card.dart';
 
 class Body extends StatelessWidget {
@@ -19,22 +18,25 @@ class Body extends StatelessWidget {
           color: kPrimaryColor,
           child: Row(
             children: [
-              FillOutlineButton(press: () {}, text: "Recent Message"),
+              FillOutlineButton(press: () {}, text: "Recent Events"),
               const SizedBox(width: kDefaultPadding)
             ],
           ),
         ),
         Expanded(
           child: ListView.builder(
-            itemCount: chatsData.length,
+            itemCount: events.length,
             itemBuilder: (context, index) => ChatCard(
-              chat: chatsData[index],
-              press: () => Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => const MessagesScreen(),
-                ),
-              ),
+              event: events[index], // Pass the event object to ChatCard
+              press: () {
+                // Navigate to event details screen when an event card is tapped
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => EventDetailsScreen(event: events[index]),
+                  ),
+                );
+              },
             ),
           ),
         ),

@@ -1,18 +1,19 @@
 import 'package:chat/constants.dart';
+import 'package:chat/screens/chats/chats_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:chat/screens/add_people/AddPeopleScreen.dart';
 import 'package:chat/screens/see_events/See_events.dart';
 import 'components/body.dart';
 
-class ChatsScreen extends StatefulWidget {
-  const ChatsScreen({Key? key}) : super(key: key);
+class AddPeopleScreen extends StatefulWidget {
+  const AddPeopleScreen({Key? key}) : super(key: key);
 
   @override
-  _ChatsScreenState createState() => _ChatsScreenState();
+  _AddPeopleScreen createState() => _AddPeopleScreen();
 }
 
-class _ChatsScreenState extends State<ChatsScreen> {
-  int _selectedIndex = 0;
+class _AddPeopleScreen extends State<AddPeopleScreen> {
+  int _selectedIndex = 1;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -38,25 +39,30 @@ class _ChatsScreenState extends State<ChatsScreen> {
         setState(() {
           _selectedIndex = value;
         });
-    switch (value) {
-    case 1:
-    Navigator.push(
-    context,
-    MaterialPageRoute(
-    builder: (context) => AddPeopleScreen(),
-    ),
-    );
-    break;
-    case 2:
-    Navigator.push(
-    context,
-    MaterialPageRoute(
-    builder: (context) => SeeEventsScreen(),
-    ),
-    );
-    break;
-    }
-  },
+        switch (value) {
+          case 0:
+            Navigator.push(context,
+            MaterialPageRoute(builder: (context) => ChatsScreen(),
+            ),
+            );
+          case 1:
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => AddPeopleScreen(),
+              ),
+            );
+            break;
+          case 2:
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => SeeEventsScreen(),
+              ),
+            );
+            break;
+        }
+      },
       items: const [
         BottomNavigationBarItem(icon: Icon(Icons.messenger), label: "Chats"),
         BottomNavigationBarItem(icon: Icon(Icons.people), label: "Add people"),
@@ -74,9 +80,9 @@ class _ChatsScreenState extends State<ChatsScreen> {
 
   AppBar buildAppBar() {
     return AppBar(
-      backgroundColor: kPrimaryColor,
-      automaticallyImplyLeading: false,
-      title: const Text("Chats")
+        backgroundColor: kPrimaryColor,
+        automaticallyImplyLeading: false,
+        title: const Text("Chats")
     );
   }
 }
