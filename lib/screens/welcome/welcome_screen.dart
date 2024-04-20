@@ -24,7 +24,7 @@ class WelcomeScreen extends StatelessWidget {
             ),
             const Spacer(),
             Text(
-              "Talk to any person of your \ninterest.",
+              "Talk to any person of your \ninterest and more...",
               textAlign: TextAlign.center,
               style: TextStyle(
                 color: Theme.of(context)
