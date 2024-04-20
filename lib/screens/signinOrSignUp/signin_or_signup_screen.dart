@@ -1,5 +1,6 @@
 import 'package:chat/components/primary_button.dart';
 import 'package:chat/constants.dart';
+import 'package:chat/screens/register/register_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:chat/screens/login/login_screen.dart';
 
@@ -39,7 +40,7 @@ class SigninOrSignupScreen extends StatelessWidget {
                 press: () => Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => const ChatsScreen(),
+                    builder: (context) => const RegisterScreen(),
                   ),
                 ),
               ),
