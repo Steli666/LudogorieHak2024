@@ -42,6 +42,7 @@ class _SeeEventsScreenState extends State<SeeEventsScreen> {
                 builder: (context) => ChatsScreen(),
               ),
             );
+            break;
           case 1:
           // Navigate to the AddPeopleScreen
             Navigator.push(
@@ -81,15 +82,17 @@ class _SeeEventsScreenState extends State<SeeEventsScreen> {
           label: "Profile",
         ),
       ],
+      backgroundColor: Colors.deepPurple.shade700, // Change bottom navigation bar color to purple
+      selectedItemColor: Colors.white, // Change selected item color to white
+      unselectedItemColor: Colors.grey, // Change unselected item color to grey
     );
   }
 
   AppBar buildAppBar() {
     return AppBar(
-      backgroundColor: kPrimaryColor,
+      backgroundColor: kPrimaryColor, // Change app bar color to purple
       automaticallyImplyLeading: false,
       title: const Text("See Events"),
     );
   }
 }
-

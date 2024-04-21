@@ -35,25 +35,21 @@ class _AddPeopleScreen extends State<AddPeopleScreen> {
         });
         switch (value) {
           case 0:
-            Navigator.push(context,
-            MaterialPageRoute(builder: (context) => ChatsScreen(),
-            ),
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => ChatsScreen()),
             );
             break;
           case 1:
             Navigator.push(
               context,
-              MaterialPageRoute(
-                builder: (context) => AddPeopleScreen(),
-              ),
+              MaterialPageRoute(builder: (context) => AddPeopleScreen()),
             );
             break;
           case 2:
             Navigator.push(
               context,
-              MaterialPageRoute(
-                builder: (context) => SeeEventsScreen(),
-              ),
+              MaterialPageRoute(builder: (context) => SeeEventsScreen()),
             );
             break;
           case 3:
@@ -68,7 +64,8 @@ class _AddPeopleScreen extends State<AddPeopleScreen> {
         BottomNavigationBarItem(icon: Icon(Icons.messenger), label: "Chats"),
         BottomNavigationBarItem(icon: Icon(Icons.people), label: "Add people"),
         BottomNavigationBarItem(icon: Icon(Icons.people), label: "See events"),
-        BottomNavigationBarItem(icon: Icon(Icons.add_to_photos), label: "Friend requests"),
+        BottomNavigationBarItem(
+            icon: Icon(Icons.add_to_photos), label: "Friend requests"),
         BottomNavigationBarItem(
           icon: CircleAvatar(
             radius: 14,
@@ -77,14 +74,16 @@ class _AddPeopleScreen extends State<AddPeopleScreen> {
           label: "Profile",
         ),
       ],
+      backgroundColor: Colors.deepPurple.shade700, // Change bottom navigation bar color to purple
+      selectedItemColor: Colors.white, // Change selected item color to white
+      unselectedItemColor: Colors.grey, // Change unselected item color to grey
     );
   }
 
   AppBar buildAppBar() {
     return AppBar(
-        backgroundColor: kPrimaryColor,
+        backgroundColor: kPrimaryColor, // Change app bar color to purple
         automaticallyImplyLeading: false,
-        title: const Text("Chats")
-    );
+        title: const Text("Chats"));
   }
 }

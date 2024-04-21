@@ -6,17 +6,14 @@ import 'package:chat/constants.dart';
 import 'package:chat/models/User.dart';
 
 class FriendRequestScreen extends StatelessWidget {
-
-
-  const FriendRequestScreen({Key? key})
-      : super(key: key);
+  const FriendRequestScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Text('Friend Requests'),
-        backgroundColor: kPrimaryColor,
+        backgroundColor: Colors.deepPurple.shade700, // Change app bar color to purple
       ),
       body: ListView.builder(
         itemCount: users.length,
@@ -50,9 +47,12 @@ class FriendRequestScreen extends StatelessWidget {
                               // Implement accept functionality
                             },
                             style: ElevatedButton.styleFrom(
-                              backgroundColor: Colors.green,
+                              backgroundColor: Colors.deepPurple.shade500, // Change button color to green
                             ),
-                            child: Text('Accept'),
+                            child: Text(
+                              'Accept',
+                              style: TextStyle(color: Colors.red.shade50), // Change text color to black
+                            ),
                           ),
                           SizedBox(width: 8),
                           ElevatedButton(
@@ -60,9 +60,12 @@ class FriendRequestScreen extends StatelessWidget {
                               // Implement deny functionality
                             },
                             style: ElevatedButton.styleFrom(
-                              backgroundColor: Colors.red,
+                              backgroundColor: Colors.black, // Change button color to red
                             ),
-                            child: Text('Deny'),
+                            child: Text(
+                              'Deny',
+                              style: TextStyle(color: Colors.red.shade50), // Change text color to black
+                            ),
                           ),
                         ],
                       ),
@@ -80,9 +83,9 @@ class FriendRequestScreen extends StatelessWidget {
         onTap: (index) {
           switch (index) {
             case 0:
-              Navigator.push(context,
-                MaterialPageRoute(builder: (context) => ChatsScreen(),
-                ),
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => ChatsScreen()),
               );
               break;
             case 1:
@@ -134,6 +137,9 @@ class FriendRequestScreen extends StatelessWidget {
             label: "Profile",
           ),
         ],
+        backgroundColor: Colors.deepPurple.shade700, // Change bottom navigation bar color to purple
+        selectedItemColor: Colors.white, // Change selected item color to white
+        unselectedItemColor: Colors.grey, // Change unselected item color to grey
       ),
     );
   }

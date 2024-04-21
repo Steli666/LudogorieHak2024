@@ -31,32 +31,32 @@ class _ChatsScreenState extends State<ChatsScreen> {
         setState(() {
           _selectedIndex = value;
         });
-    switch (value) {
-    case 1:
-    Navigator.push(
-    context,
-    MaterialPageRoute(
-    builder: (context) => AddPeopleScreen(),
-    ),
-    );
-    break;
-    case 2:
-    Navigator.push(
-    context,
-    MaterialPageRoute(
-    builder: (context) => SeeEventsScreen(),
-    ),
-    );
-    break;
-      case 3:
-        Navigator.push(
-          context,
-          MaterialPageRoute(builder: (context) => FriendRequestScreen()),
-        );
-        break;
-    }
-  },
-      items: const [
+        switch (value) {
+          case 1:
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => AddPeopleScreen(),
+              ),
+            );
+            break;
+          case 2:
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => SeeEventsScreen(),
+              ),
+            );
+            break;
+          case 3:
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => FriendRequestScreen()),
+            );
+            break;
+        }
+      },
+      items: [
         BottomNavigationBarItem(icon: Icon(Icons.messenger), label: "Chats"),
         BottomNavigationBarItem(icon: Icon(Icons.people), label: "Add people"),
         BottomNavigationBarItem(icon: Icon(Icons.people), label: "See events"),
@@ -69,14 +69,17 @@ class _ChatsScreenState extends State<ChatsScreen> {
           label: "Profile",
         ),
       ],
+      backgroundColor: Colors.deepPurple.shade700, // Change bottom navigation bar color
+      selectedItemColor: Colors.white, // Change selected item color
+      unselectedItemColor: Colors.grey, // Change unselected item color
     );
   }
 
   AppBar buildAppBar() {
     return AppBar(
-      backgroundColor: kPrimaryColor,
+      backgroundColor: Colors.deepPurple, // Change app bar color
       automaticallyImplyLeading: false,
-      title: const Text("Chats")
+      title: const Text("Chats"),
     );
   }
 }
