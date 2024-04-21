@@ -1,5 +1,9 @@
-import 'package:flutter/material.dart';
+import 'dart:convert';
+import 'dart:developer';
 
+import 'package:chat/screens/chats/chats_screen.dart';
+import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
 class RegisterScreen extends StatefulWidget {
   const RegisterScreen({Key? key}) : super(key: key);
 
@@ -13,18 +17,21 @@ class _RegisterScreenState extends State<RegisterScreen> {
   final TextEditingController _lastNameController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
   final TextEditingController _profileDescriptionController = TextEditingController();
+  final TextEditingController _username = TextEditingController();
 
   final FocusNode _emailFocus = FocusNode();
   final FocusNode _firstNameFocus = FocusNode();
   final FocusNode _lastNameFocus = FocusNode();
   final FocusNode _passwordFocus = FocusNode();
   final FocusNode _profileDescriptionFocus = FocusNode();
+  final FocusNode _usernameFocus = FocusNode();
 
   bool _isEmailValid = true;
   bool _isFirstNameValid = true;
   bool _isLastNameValid = true;
   bool _isPasswordValid = true;
   bool _isProfileDescriptionValid = true;
+  bool _isUsername = true;
 
   @override
   Widget build(BuildContext context) {
@@ -58,7 +65,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     focusNode: _emailFocus,
                     decoration: InputDecoration(
                       filled: true,
-                      fillColor: _isEmailValid ? Colors.red.shade50 : Colors.red,
+                      fillColor: _isEmailValid ? Colors.red.shade50 : Colors
+                          .red,
                       labelText: 'Email',
                       hintText: 'Enter your email',
                       border: OutlineInputBorder(),
@@ -73,7 +81,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     focusNode: _firstNameFocus,
                     decoration: InputDecoration(
                       filled: true,
-                      fillColor: _isFirstNameValid ? Colors.red.shade50 : Colors.red,
+                      fillColor: _isFirstNameValid ? Colors.red.shade50 : Colors
+                          .red,
                       labelText: 'First Name',
                       hintText: 'Enter your first name',
                       border: OutlineInputBorder(),
@@ -88,7 +97,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     focusNode: _lastNameFocus,
                     decoration: InputDecoration(
                       filled: true,
-                      fillColor: _isLastNameValid ? Colors.red.shade50 : Colors.red,
+                      fillColor: _isLastNameValid ? Colors.red.shade50 : Colors
+                          .red,
                       labelText: 'Last Name',
                       hintText: 'Enter your last name',
                       border: OutlineInputBorder(),
@@ -104,9 +114,25 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     obscureText: true,
                     decoration: InputDecoration(
                       filled: true,
-                      fillColor: _isPasswordValid ? Colors.red.shade50 : Colors.red,
+                      fillColor: _isPasswordValid ? Colors.red.shade50 : Colors
+                          .red,
                       labelText: 'Password',
                       hintText: 'Enter your password',
+                      border: OutlineInputBorder(),
+                    ),
+                  ),
+                ),
+                SizedBox(height: 16),
+                Container(
+                  height: 50.0,
+                  child: TextField(
+                    controller: _username,
+                    focusNode: _usernameFocus,
+                    decoration: InputDecoration(
+                      filled: true,
+                      fillColor: _isUsername ? Colors.red.shade50 : Colors.red,
+                      labelText: 'Username',
+                      hintText: 'Enter your username',
                       border: OutlineInputBorder(),
                     ),
                   ),
@@ -119,7 +145,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     focusNode: _profileDescriptionFocus,
                     decoration: InputDecoration(
                       filled: true,
-                      fillColor: _isProfileDescriptionValid ? Colors.red.shade50 : Colors.red,
+                      fillColor: _isProfileDescriptionValid
+                          ? Colors.red.shade50
+                          : Colors.red,
                       labelText: 'Profile Description',
                       hintText: 'Enter your profile description',
                       border: OutlineInputBorder(),
@@ -160,8 +188,19 @@ class _RegisterScreenState extends State<RegisterScreen> {
       _isFirstNameValid = _firstNameController.text.isNotEmpty;
       _isLastNameValid = _lastNameController.text.isNotEmpty;
       _isPasswordValid = _passwordController.text.length >= 5;
-      _isProfileDescriptionValid = _profileDescriptionController.text.isNotEmpty;
+      _isProfileDescriptionValid =
+          _profileDescriptionController.text.isNotEmpty;
+      _isUsername = _username.text.isNotEmpty;
     });
+    _registerUser(
+      _emailController.text,
+      _firstNameController.text,
+      _lastNameController.text,
+      _passwordController.text,
+      _profileDescriptionController.text,
+      _username.text,
+      context,
+    );
   }
 
   bool _isValidEmail(String email) {
@@ -182,5 +221,64 @@ class _RegisterScreenState extends State<RegisterScreen> {
     _passwordFocus.dispose();
     _profileDescriptionFocus.dispose();
     super.dispose();
+  }
+
+
+  void _registerUser(String email,
+      String firstName,
+      String lastName,
+      String password,
+      String profileDescription,
+      String username,
+      BuildContext context,) async {
+    // Your backend API URL
+    String apiUrl = 'hakaton.gigalixirapp.com';
+
+    // Define the request body as a JSON object
+    var body = {
+      'email': email,
+      'username': username,
+      'first_name': firstName,
+      'last_name': lastName,
+      'password': password,
+      'profile_description': profileDescription,
+    };
+
+    // Make a POST request to your backend API
+    var response = await http.post(
+      Uri.https(apiUrl, "/api/register"),
+      body: body
+    );
+
+    log("adwaw  " + (response.statusCode as String));
+    if (response.statusCode == 200) {
+      // Registration successful, navigate to ChatsScreen
+      log("hello");
+      print("hello");
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => ChatsScreen()),
+      );
+    } else {
+      // Registration failed, show error dialog
+      showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: Text('Registration Error'),
+            content: Text(
+                'Username or email already in use. Please try again.'),
+            actions: <Widget>[
+              TextButton(
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+                child: Text('OK'),
+              ),
+            ],
+          );
+        },
+      );
+    }
   }
 }

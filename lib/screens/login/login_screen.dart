@@ -1,5 +1,6 @@
+import 'package:chat/screens/chats/chats_screen.dart';
 import 'package:flutter/material.dart';
-
+import 'package:http/http.dart' as http;
 class LoginScreen extends StatefulWidget {
   const LoginScreen({Key? key}) : super(key: key);
 
@@ -99,11 +100,57 @@ class _LoginScreenState extends State<LoginScreen> {
     );
   }
 
+
+
+  void _loginUser(String email, String password) async {
+    // Your backend API URL
+    String apiUrl = 'https://your-backend-api.com/login';
+
+    // Make a POST request to your backend API
+    var response = await http.post(
+      Uri.parse(apiUrl),
+      body: {
+        'email': email,
+        'password': password,
+      },
+    );
+
+    // Check if the request was successful
+    if (response.statusCode == 200) {
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => ChatsScreen()),
+      );
+    } else {
+      // Login failed, show error dialog
+      showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: Text('Login Error'),
+            content: Text('Invalid email or password. Please try again.'),
+            actions: <Widget>[
+              TextButton(
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+                child: Text('OK'),
+              ),
+            ],
+          );
+        },
+      );
+    }
+  }
   void _validateInputs() {
     setState(() {
       _isEmailValid = _isValidEmail(_emailController.text);
       _isPasswordValid = _passwordController.text.length >= 5;
     });
+    if (_isEmailValid && _isPasswordValid) {
+      // Call a function to send the email and password to the backend
+      _loginUser(_emailController.text, _passwordController.text);
+    }
   }
 
   bool _isValidEmail(String email) {
