@@ -27,60 +27,32 @@ class Event {
 
   List events = [
     Event(
-      title: "Jenny Wilson",
-      description: "Hope you are doing well...",
+      title: "Eco lager",
+      description: "Nature",
       imagePath: "assets/images/user.png",
-      time: "3m ago",
+      time: "12 May 2024",
       location: 'New York'
     ),
     Event(
-        title: "Jenny Wilson",
-        description: "Hope you are doing well...",
-        imagePath: "assets/images/user.png",
-        time: "3m ago",
-        location: 'New York'
+        title: "Art Museum",
+        description: "Pictures",
+        imagePath: "assets/images/user_2.png",
+        time: "19 June 2024",
+        location: 'London'
     ),
     Event(
-        title: "Jenny Wilson",
-        description: "Hope you are doing well...",
-        imagePath: "assets/images/user.png",
-        time: "3m ago",
-        location: 'New York'
+        title: "Hakaton",
+        description: "Coding",
+        imagePath: "assets/images/user_3.png",
+        time: "21 April 2024",
+        location: 'Razgrad'
     ),
     Event(
-        title: "Jenny Wilson",
-        description: "Hope you are doing well...",
-        imagePath: "assets/images/user.png",
-        time: "3m ago",
-        location: 'New York'
-    ),
-    Event(
-        title: "Jenny Wilson",
-        description: "Hope you are doing well...",
-        imagePath: "assets/images/user.png",
-        time: "3m ago",
-        location: 'New York'
-    ),
-    Event(
-        title: "Jenny Wilson",
-        description: "Hope you are doing well...",
-        imagePath: "assets/images/user.png",
-        time: "3m ago",
-        location: 'New York'
-    ),
-    Event(
-        title: "Jenny Wilson",
-        description: "Hope you are doing well...",
-        imagePath: "assets/images/user.png",
-        time: "3m ago",
-        location: 'New York'
-    ),
-    Event(
-        title: "Jenny Wilson",
-        description: "Hope you are doing well...",
-        imagePath: "assets/images/user.png",
-        time: "3m ago",
-        location: 'New York'
+        title: "Picnic",
+        description: "Food",
+        imagePath: "assets/images/user_4.png",
+        time: "21 April 2024",
+        location: 'Bulgaria'
     ),
   ];
 

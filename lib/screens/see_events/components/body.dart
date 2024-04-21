@@ -1,59 +1,21 @@
-import 'dart:convert';
-import 'package:chat/screens/see_events/components/chat_card.dart';
-import 'package:chat/screens/see_events/components/EventDetailsScreen.dart';
-import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
-import 'package:chat/models/Event.dart';
-
-import 'package:chat/screens/signinOrSignUp/signin_or_signup_screen.dart';
 import 'package:chat/components/filled_outline_button.dart';
 import 'package:chat/constants.dart';
+import 'package:chat/models/Event.dart'; // Import the Event model
+import 'package:chat/screens/see_events/components/EventDetailsScreen.dart';
+import 'package:chat/screens/signinOrSignUp/signin_or_signup_screen.dart';
+import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'chat_card.dart';
 
-class Body extends StatefulWidget {
+class Body extends StatelessWidget {
   const Body({Key? key}) : super(key: key);
+  Future<void> _logout(BuildContext context) async {
+    // Delete token from SharedPreferences
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.remove('token');
 
-  @override
-  _BodyState createState() => _BodyState();
-}
-
-class _BodyState extends State<Body> {
-  List<Event> events = [];
-
-  @override
-  void initState() {
-    super.initState();
-    fetchEvents();
-  }
-
-  Future<void> fetchEvents() async {
-    final apiUrl = 'https://your-backend-api.com/events';
-    final response = await http.get(Uri.parse(apiUrl));
-
-    if (response.statusCode == 200) {
-      final List<dynamic> data = json.decode(response.body);
-      setState(() {
-        events = data.map((eventData) => Event.fromJson(eventData)).toList();
-      });
-    } else {
-      showDialog(
-        context: context,
-        builder: (BuildContext context) {
-          return AlertDialog(
-            title: Text('Error'),
-            content: Text('Failed to fetch events. Please try again later.'),
-            actions: <Widget>[
-              TextButton(
-                onPressed: () {
-                  Navigator.of(context).pop();
-                },
-                child: Text('OK'),
-              ),
-            ],
-          );
-        },
-      );
-    }
+    // Navigate to SignInOrSignUpScreen
+    SigninOrSignupScreen.navigateTo(context);
   }
 
   @override
@@ -68,6 +30,7 @@ class _BodyState extends State<Body> {
             children: [
               FillOutlineButton(press: () {}, text: "Recent Events"),
               const SizedBox(width: kDefaultPadding),
+              // Logout button
               Spacer(),
               IconButton(
                 icon: Icon(Icons.logout),
@@ -80,8 +43,9 @@ class _BodyState extends State<Body> {
           child: ListView.builder(
             itemCount: events.length,
             itemBuilder: (context, index) => ChatCard(
-              event: events[index],
+              event: events[index], // Pass the event object to ChatCard
               press: () {
+                // Navigate to event details screen when an event card is tapped
                 Navigator.push(
                   context,
                   MaterialPageRoute(
@@ -94,11 +58,5 @@ class _BodyState extends State<Body> {
         ),
       ],
     );
-  }
-
-  void _logout(BuildContext context) async {
-    final prefs = await SharedPreferences.getInstance();
-    await prefs.remove('token');
-    SigninOrSignupScreen.navigateTo(context);
   }
 }
