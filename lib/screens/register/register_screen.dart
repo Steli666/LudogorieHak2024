@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:developer';
 
+import 'package:chat/screens/Token/Token.dart';
 import 'package:chat/screens/chats/chats_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
@@ -224,15 +225,11 @@ class _RegisterScreenState extends State<RegisterScreen> {
   }
 
 
-  void _registerUser(String email,
-      String firstName,
-      String lastName,
-      String password,
-      String profileDescription,
-      String username,
+  void _registerUser(String email, String firstName, String lastName,
+      String password, String profileDescription, String username,
       BuildContext context,) async {
-    // Your backend API URL
-    String apiUrl = 'hakaton.gigalixirapp.com';
+    String apiUrl = "http://hakaton.gigalixirapp.com/api/register";
+
 
     // Define the request body as a JSON object
     var body = {
@@ -241,26 +238,42 @@ class _RegisterScreenState extends State<RegisterScreen> {
       'first_name': firstName,
       'last_name': lastName,
       'password': password,
-      'profile_description': profileDescription,
+      'profile_description': profileDescription
     };
+
+    // Define headers
+    Map<String, String> headers = {
+      'Content-Type': 'application/json',
+      // Add any additional headers if needed
+    };
+
+    // Convert the body to a JSON string
+    String jsonBody = jsonEncode(body);
 
     // Make a POST request to your backend API
     var response = await http.post(
-      Uri.https(apiUrl, "/api/register"),
-      body: body
+      //Uri.parse(apiUrl),
+      Uri.https('hakaton.gigalixirapp.com', 'api/register'),
+      headers: headers,
+      body: jsonBody,
     );
-
-    log("adwaw  " + (response.statusCode as String));
+    log("hello");
+    print(response.statusCode);
+    print(response.body);
     if (response.statusCode == 200) {
-      // Registration successful, navigate to ChatsScreen
-      log("hello");
-      print("hello");
       Navigator.push(
         context,
         MaterialPageRoute(builder: (context) => ChatsScreen()),
       );
+      final Map<String, dynamic> responseData = jsonDecode(response.body);
+
+      // Extract the token from the response data
+      String token = responseData['token'];
+
+      // Store the token locally
+      await storeToken(token);
+
     } else {
-      // Registration failed, show error dialog
       showDialog(
         context: context,
         builder: (BuildContext context) {

@@ -1,3 +1,4 @@
+import 'package:chat/screens/Token/Token.dart';
 import 'package:chat/screens/chats/chats_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
@@ -105,7 +106,10 @@ class _LoginScreenState extends State<LoginScreen> {
   void _loginUser(String email, String password) async {
     // Your backend API URL
     String apiUrl = 'https://your-backend-api.com/login';
-
+    String? storedToken = await getToken();
+    Map<String, String> headers = {
+      'Authorization': 'Bearer $storedToken'
+    };
     // Make a POST request to your backend API
     var response = await http.post(
       Uri.parse(apiUrl),
@@ -113,6 +117,7 @@ class _LoginScreenState extends State<LoginScreen> {
         'email': email,
         'password': password,
       },
+      headers: headers
     );
 
     // Check if the request was successful

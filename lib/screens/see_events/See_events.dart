@@ -52,15 +52,6 @@ class _SeeEventsScreenState extends State<SeeEventsScreen> {
               ),
             );
             break;
-          case 2:
-          // Navigate to the SeeEventsScreen
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) => SeeEventsScreen(),
-              ),
-            );
-            break;
           case 3:
             Navigator.push(
               context,

@@ -8,7 +8,12 @@ import '../chats/chats_screen.dart';
 
 class SigninOrSignupScreen extends StatelessWidget {
   const SigninOrSignupScreen({Key? key}) : super(key: key);
-
+  static void navigateTo(BuildContext context) {
+    Navigator.pushReplacement(
+      context,
+      MaterialPageRoute(builder: (context) => SigninOrSignupScreen()),
+    );
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(

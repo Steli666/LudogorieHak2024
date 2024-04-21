@@ -15,7 +15,16 @@ class Event {
     required this.location,
     required this.time
   });
+  factory Event.fromJson(Map<String, dynamic> json) {
+    return Event(
+
+      title: json['title'] as String,
+      description: json['description'] as String,
+      imagePath: json['imagePath'] as String, location: json['location'], time: json['time'],
+    );
+  }
 }
+
   List events = [
     Event(
       title: "Jenny Wilson",

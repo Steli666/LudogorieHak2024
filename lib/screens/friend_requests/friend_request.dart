@@ -1,20 +1,36 @@
 import 'package:chat/screens/add_people/AddPeopleScreen.dart';
 import 'package:chat/screens/chats/chats_screen.dart';
 import 'package:chat/screens/see_events/See_events.dart';
+import 'package:chat/screens/signinOrSignUp/signin_or_signup_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:chat/constants.dart';
 import 'package:chat/models/User.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:chat/screens/see_events/See_events.dart';
 
 class FriendRequestScreen extends StatelessWidget {
   const FriendRequestScreen({Key? key}) : super(key: key);
+  Future<void> _logout(BuildContext context) async {
+    // Delete token from SharedPreferences
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.remove('token');
 
+    // Navigate to SignInOrSignUpScreen
+    SigninOrSignupScreen.navigateTo(context);
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Friend Requests'),
-        backgroundColor: Colors.deepPurple.shade700, // Change app bar color to purple
-      ),
+    appBar: AppBar(
+    title: Text('Friend Requests'),
+    backgroundColor: Colors.deepPurple.shade700,
+    actions: [
+    IconButton(
+    icon: Icon(Icons.logout),
+    onPressed: () => _logout(context),
+    ),
+    ],
+    ),
       body: ListView.builder(
         itemCount: users.length,
         itemBuilder: (context, index) {
@@ -102,12 +118,6 @@ class FriendRequestScreen extends StatelessWidget {
                 MaterialPageRoute(
                   builder: (context) => SeeEventsScreen(),
                 ),
-              );
-              break;
-            case 3:
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => FriendRequestScreen()),
               );
               break;
           }
